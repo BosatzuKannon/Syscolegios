@@ -1,0 +1,62 @@
+body{
+	background:#CCC;
+	width:1024px;
+	display:block;
+	margin:auto;
+	font:Georgia, "Times New Roman", Times, serif;
+}
+#principal {
+	background:#9FF;
+	border-radius:10px 10px 10px 10px;
+	-ms-border-radius:10px 10px 10px 10px;
+	-webkit-border-radius:10px 10px 10px 10px;
+	-moz-border-radius:10px 10px 10px 10px;
+	-o-border-radius:10px 10px 10px 10px;
+	-ms-box-shadow:0 0 1.3em black;
+	-moz-box-shadow:0 0 1.3em black;
+	-webkit-box-shadow:0 0 1.3em black;
+	-o-box-shadow:0 0 1.3em black;
+	box-shadow:0 0 1.3em black;
+}
+h1 {
+	border:Outset 6px LightBlue;
+	background-color:DarkSlateBlue;
+	text-align:center;
+	color:Khaki;
+}
+.entrada {
+	background-color:LightGoldenrodYellow;
+	font-family:"Bitstream Vera Serif";
+	font-weight:bold;
+	font-size:12pt;
+	color:Crimson;
+	text-align:center;
+	width:40px;
+}
+.salida {
+	text-align:center;
+	width:40px;
+}
+
+input[type=text]{
+	border-radius:7px;	
+}
+.fecha {
+	background-color:LightGoldenrodYellow;
+	font-family:"Bitstream Vera Serif";
+	color:Crimson;
+	font-weight:bold;
+	font-size:12pt;
+	text-align:center;
+}
+p {
+	font-family:Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
+	font-style:italic;
+	font-size:14pt;
+	color:blue;
+}
+h2 {
+	font-family:Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
+	color: red;
+	font-size:24px;
+}
