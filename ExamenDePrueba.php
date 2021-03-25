@@ -37,6 +37,7 @@
 			<div id="contenedor"></div>
 			<div id="mensaje" title="Mensaje syscolegios"></div>
 			<hr />
+			<input type="button" id="agregarNota" value="Agregar Nota (+)">
 			<input type="button" id="grabar" value="Grabar">
 			<input type="button" id="regresar" value="Regresar" onclick="window.history.go(-1);">
 			<hr />

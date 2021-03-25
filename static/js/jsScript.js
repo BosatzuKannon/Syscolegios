@@ -6,9 +6,12 @@ var formData = new FormData();
 
 $( function() {
 	$("#fecha").datepicker();
+
 	$('input[type=button]').button();
+
 	$("#mensaje").dialog({autoOpen: false,buttons: {
         Ok: function(){ $( this ).dialog( "close" ); }}});
+
 	var html='<table id="tabla1" border="1" align="center">';
 	html+="<tr><th>CODIGO</th><th>ALUMNO</th><th>Nota 1</th>";
 	html+="<th>Nota 2</th>";
@@ -25,11 +28,16 @@ $( function() {
 		html+='<td><div id="W'+codalu+'"></div></td></tr>';
 	});
 	html+='</table>';
+
 	$("#contenedor").html(html);
+
 	$(document).on('change', '.entrada', function () {
 		CambiarColor($(this).attr('id'),$(this).val());
     }); 
+
 	$("#grabar").click(function(){ GrabarNotas(); });	
+
+	$("#agregarNota").click(function(){ AgregarNotas(); });	
 
 });
 
@@ -56,3 +64,37 @@ function Desempeno(nota){
 function GrabarNotas(){
 	alert('Debe Implementarse obligatoriamente....');
 }
+
+function AgregarNotas(){
+	var nColumnas = $("#tabla1 tr:last td").length;
+
+	var html='<table id="tabla1" border="1" align="center">';
+	html+="<tr><th>CODIGO</th><th>ALUMNO</th>";
+
+	for (var i = 0; i <= (nColumnas - 4); i++) {
+		html+="<th>Nota " + (i+1) +"</th>";
+	}
+
+	html+="<th>Promedio</th><th>Desempeño</th></tr>";
+	nColumnas++;
+	const alfabeto = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+
+	$.each( CodsAlum, function( idalu, codalu ) {
+		/*var input1 ='<input type="text" id="A'+codalu+'" value="" size="3" class="entrada">';
+		var input2 ='<input type="text" id="B'+codalu+'" value="" size="3" class="entrada">';*/
+		var inputProm ='<input type="text" id="X'+codalu+'" size="3" class="salida" readonly>';
+		
+		html += '<tr><td align="center">'+codalu+'</td><td>'+Alumnos[codalu]+'</td>';
+		for (i = 0; i < (nColumnas - 4); i++) {
+			html += '<td><input type="text" id="' + alfabeto[i] + codalu + '" value="" size="3" class="entrada"></td>';
+		}
+		/*html += '<td>'+input1+'</td>';
+		html += '<td>'+input2+'</td>';*/
+		html += '<td align="center">'+inputProm+'</td>';
+		html += '<td><div id="W'+codalu+'"></div></td></tr>';
+	});
+	html += '</table>';
+
+	$("#contenedor").html(html);
+}
+
