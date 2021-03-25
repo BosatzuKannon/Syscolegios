@@ -33,11 +33,29 @@ $( function() {
 
 	$(document).on('change', '.entrada', function () {
 		CambiarColor($(this).attr('id'),$(this).val());
+		//promedioNota($(this).attr('id'));
     }); 
 
 	$("#grabar").click(function(){ GrabarNotas(); });	
 
-	$("#agregarNota").click(function(){ AgregarNotas(); });	
+	$("#agregarNota").click(function(){ AgregarNotas(); });
+
+	$('#tabla1').on('change', 'input', function () {
+		var nColumnas = $("#tabla1 tr:last td").length;
+	    var row = $(this).closest('tr');
+	    var subId = $(this).attr('id').substr(1,5);
+	    var idProm ='X'+subId;	    
+	    var notas = 0;
+	    var con = 0;
+	    $('input', row).each(function() {	        
+	        if($(this).val() != "" && !isNaN($(this).val()) && con < (nColumnas-4)){
+	        	notas += Number($(this).val());
+	        	con++;
+	        }
+	    });
+	    
+	    row.find("#"+idProm).val(notas/con);	    
+	});
 
 });
 
@@ -51,7 +69,7 @@ function CambiarColor(id,nota){
 	else if (nota<=rango[2]) $('#'+id).css("color", "orange");
 	else if (nota<=rango[3]) $('#'+id).css("color", "green");
 	else if (nota<=rango[4]) $('#'+id).css("color", "blue");
-	else $('#'+id).val('');
+	//else $('#'+id).val('-');
 }
 
 function Desempeno(nota){
@@ -80,16 +98,14 @@ function AgregarNotas(){
 	const alfabeto = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 
 	$.each( CodsAlum, function( idalu, codalu ) {
-		/*var input1 ='<input type="text" id="A'+codalu+'" value="" size="3" class="entrada">';
-		var input2 ='<input type="text" id="B'+codalu+'" value="" size="3" class="entrada">';*/
+		
 		var inputProm ='<input type="text" id="X'+codalu+'" size="3" class="salida" readonly>';
 		
 		html += '<tr><td align="center">'+codalu+'</td><td>'+Alumnos[codalu]+'</td>';
 		for (i = 0; i < (nColumnas - 4); i++) {
 			html += '<td><input type="text" id="' + alfabeto[i] + codalu + '" value="" size="3" class="entrada"></td>';
 		}
-		/*html += '<td>'+input1+'</td>';
-		html += '<td>'+input2+'</td>';*/
+		
 		html += '<td align="center">'+inputProm+'</td>';
 		html += '<td><div id="W'+codalu+'"></div></td></tr>';
 	});
@@ -98,3 +114,48 @@ function AgregarNotas(){
 	$("#contenedor").html(html);
 }
 
+/*function promedioNota(){
+
+	var nColumnas = $("#tabla1 tr:last td").length;
+
+	var table = document.getElementById("tabla1"); 
+
+	for (var i = 1, row; row = table.rows[i]; i++) { 
+		for (var j = 2, col; col = row.cells[j]; j++) {
+			
+			if(j <= (nColumnas-3)){
+				//var = col.value;
+				console.log(col.innerText)
+				console.log(col)
+			}
+		} 
+	}
+	
+}*/
+
+/*$('#tabla1').on('change', 'input', function () {
+    var row = $(this).closest('tr');
+    var notas = 0;
+    $('input', row).each(function() {
+        notas += Number($(this).val());
+    });
+    //$('.total', row).text(total);
+    console.log(notas);
+});*/
+
+/*function (){
+	var nColumnas = $("#tabla1 tr:last td").length;
+	console.log("inside change event");
+	var table = document.getElementById("tabla1"); 
+
+	for (var i = 1, row; row = table.rows[i]; i++) { 
+		for (var j = 2, col; col = row.cells[j]; j++) {
+			
+			if(j <= (nColumnas-3)){
+				//var = col.value;
+				console.log(col.innerText)
+				console.log(col)
+			}
+		} 
+	}
+};*/
