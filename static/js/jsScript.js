@@ -47,18 +47,11 @@ $( function() {
     });
 
     $(document).on('keyup', '.entrada', function (event) {
-		console.log(event.keyCode);
+		
 		var fil_act = $(this).closest("tr").index();
-		console.log("fila : "+$(this).closest("tr").index());
+		
 		var col_act = $(this).closest("td").index();
-		console.log("Columna : "+$(this).closest("td").index());
-		console.log("Columnas total : " + $("#tabla1 tr:last td").length);
-		console.log("Filas Total : " + $("#tabla1 tr").length);
-		//console.log($(this).attr('id'));
-		//console.log($(this));
-
-		//document.getElementById("IDdeTabla").rows[i].cells[j].innerText  
-
+		
 		if(event.keyCode == 40 || event.keyCode == 13){			
 			if(fil_act < ($("#tabla1 tr").length)-1){				
 				var celda = (document.getElementById("tabla1").rows[(fil_act + 1)].cells[col_act]).closest('td');
@@ -89,21 +82,9 @@ $( function() {
 		}
     });
 
-    /*document.querySelector("#tabla1", '.entrada').onkeyup = function(event){
-		alert(event.keyCode);
-		console.log($(this).attr('id'));
-	}*/
-
 	$("#grabar").click(function(){ GrabarNotas(); });
 
-
-
 	$("#agregarNota").click(function(){ AgregarNotas(); });
-	//_____________________________________________________________________________
-	/*$("#tabla1").focusout(function(){
-	  $(this).css("background-color", "#FFFFFF");
-	});*/
-
 	
 	$('#tabla1').on('change', 'input', function () {
 		
@@ -212,44 +193,6 @@ function AgregarNotas(){
 			x.innerHTML = '<input type="text" id="'+idProm+'"  value="" size="3" class="entrada">';
 		}
 	}
-
-	/*var td = document.createElement('td');
-	var input = document.createElement('INPUT');
-	input.type = 'text';
-	td.appendChild(input);
-	tr[newIndex].appendChild(td);*/
-
-	
-	/*var nColumnas = $("#tabla1 tr:last td").length;
-
-	var html='<table id="tabla1" border="1" align="center">';
-	html+="<tr><th>CODIGO</th><th>ALUMNO</th>";
-
-	for (var i = 0; i <= (nColumnas - 4); i++) {
-		html+="<th>Nota " + (i+1) +"</th>";
-	}
-
-	html+="<th>Promedio</th><th>Desempeño</th></tr>";
-	nColumnas++;
-	const alfabeto = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-
-	$.each( CodsAlum, function( idalu, codalu ) {
-		
-		var inputProm ='<input type="text" id="X'+codalu+'" size="3" class="salida" readonly>';
-		
-		html += '<tr><td align="center">'+codalu+'</td><td>'+Alumnos[codalu]+'</td>';
-		for (i = 0; i < (nColumnas - 4); i++) {
-			html += '<td><input type="text" id="' + alfabeto[i] + codalu + '" value="" size="3" class="entrada"></td>';
-		}
-		
-		html += '<td align="center">'+inputProm+'</td>';
-		html += '<td><div id="W'+codalu+'"></div></td></tr>';
-	});
-	html += '</table>';
-
-	$("#contenedor").html(html);*/
-
-	
 }
 
 function cargarNotas(){
