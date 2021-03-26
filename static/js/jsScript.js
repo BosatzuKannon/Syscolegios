@@ -32,9 +32,32 @@ $( function() {
 	$("#contenedor").html(html);
 
 	$(document).on('change', '.entrada', function () {
-		validarNota($(this).attr('id'));
-		CambiarColor($(this).attr('id'),$(this).val());
-    }); 
+		var val = validarNota($(this).attr('id'));
+
+		if($(this).val() != ""){
+			if(val != "ok"){
+				alert("Error : "+val);
+				$(this).val('');
+				//$(this).trigger('change');
+			}
+			else{
+				CambiarColor($(this).attr('id'),$(this).val());
+			}
+		}
+    });
+
+    $(document).on('keyup', '.entrada', function (event) {
+		console.log(event.keyCode);
+		console.log("fila : "+$(this).closest("tr").index());
+		console.log("Columna : "+$(this).closest("td").index());
+		//console.log($(this).attr('id'));
+		//console.log($(this));
+    });
+
+    /*document.querySelector("#tabla1", '.entrada').onkeyup = function(event){
+		alert(event.keyCode);
+		console.log($(this).attr('id'));
+	}*/
 
 	$("#grabar").click(function(){ GrabarNotas(); });
 
@@ -90,7 +113,20 @@ $( function() {
 });
 
 function validarNota(nota){
-	console.log($('#'+nota).val());
+	
+	var n = $('#'+nota).val();
+	var mensaje = 'ok';
+	var expreg = /^(\d{1})(\.\d{1,2})?$/;
+	
+	if(!expreg.test(n)){
+		mensaje = "Por favor solo ingrese números";
+	}
+
+	if(parseFloat(n) <= 0 || parseFloat(n) >= 5){
+		mensaje = "La nota " + n +" debe estar entre 0 y 5.";	
+	}
+
+	return mensaje;
 }
 
 function CambiarColor(id,nota){
