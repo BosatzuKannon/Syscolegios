@@ -48,10 +48,45 @@ $( function() {
 
     $(document).on('keyup', '.entrada', function (event) {
 		console.log(event.keyCode);
+		var fil_act = $(this).closest("tr").index();
 		console.log("fila : "+$(this).closest("tr").index());
+		var col_act = $(this).closest("td").index();
 		console.log("Columna : "+$(this).closest("td").index());
+		console.log("Columnas total : " + $("#tabla1 tr:last td").length);
+		console.log("Filas Total : " + $("#tabla1 tr").length);
 		//console.log($(this).attr('id'));
 		//console.log($(this));
+
+		//document.getElementById("IDdeTabla").rows[i].cells[j].innerText  
+
+		if(event.keyCode == 40 || event.keyCode == 13){			
+			if(fil_act < ($("#tabla1 tr").length)-1){				
+				var celda = (document.getElementById("tabla1").rows[(fil_act + 1)].cells[col_act]).closest('td');
+				var id_cel_nex = $(celda).find('input[type="text"]').attr('id');
+				document.getElementById(id_cel_nex).focus();				
+			}
+		}
+		else if(event.keyCode == 38){
+			if(fil_act > 1){				
+				var celda = (document.getElementById("tabla1").rows[(fil_act - 1)].cells[col_act]).closest('td');
+				var id_cel_nex = $(celda).find('input[type="text"]').attr('id');
+				document.getElementById(id_cel_nex).focus();				
+			}
+		}
+		else if(event.keyCode == 37){
+			if(col_act > 2){				
+				var celda = (document.getElementById("tabla1").rows[fil_act].cells[(col_act -1)]).closest('td');
+				var id_cel_nex = $(celda).find('input[type="text"]').attr('id');
+				document.getElementById(id_cel_nex).focus();				
+			}
+		}
+		else if(event.keyCode == 39){
+			if(col_act < ($("#tabla1 tr:last td").length) - 4){				
+				var celda = (document.getElementById("tabla1").rows[fil_act].cells[(col_act +1)]).closest('td');
+				var id_cel_nex = $(celda).find('input[type="text"]').attr('id');
+				document.getElementById(id_cel_nex).focus();				
+			}
+		}
     });
 
     /*document.querySelector("#tabla1", '.entrada').onkeyup = function(event){
