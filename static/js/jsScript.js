@@ -32,6 +32,7 @@ $( function() {
 	$("#contenedor").html(html);
 
 	$(document).on('change', '.entrada', function () {
+		validarNota($(this).attr('id'));
 		CambiarColor($(this).attr('id'),$(this).val());
     }); 
 
@@ -40,11 +41,12 @@ $( function() {
 
 
 	$("#agregarNota").click(function(){ AgregarNotas(); });
-	
+	//_____________________________________________________________________________
 	/*$("#tabla1").focusout(function(){
 	  $(this).css("background-color", "#FFFFFF");
 	});*/
 
+	
 	$('#tabla1').on('change', 'input', function () {
 		
 		var nColumnas = $("#tabla1 tr:last td").length;
@@ -83,7 +85,13 @@ $( function() {
 		}
 	});
 
+	cargarNotas();
+
 });
+
+function validarNota(nota){
+	console.log($('#'+nota).val());
+}
 
 function CambiarColor(id,nota){
 	var CDesemp='W'+id.substr(1,5);
@@ -103,11 +111,6 @@ function Desempeno(nota){
 	if (nota<=rango[2]) return 'Basico';
 	if (nota<=rango[3]) return 'Alto';
 	if (nota<=rango[4]) return 'Superior';
-}
-
-function GrabarNotas(){
-
-	alert('Debe Implementarse obligatoriamente....');
 }
 
 function AgregarNotas(){
@@ -173,26 +176,76 @@ function AgregarNotas(){
 	});
 	html += '</table>';
 
-	$("#contenedor").html(html);
+	$("#contenedor").html(html);*/
 
-	/*$('#tabla1').on('change', 'input', function () {
-		var nColumnas = $("#tabla1 tr:last td").length;
-	    var row = $(this).closest('tr');
-	    var subId = $(this).attr('id').substr(1,5);
-	    var idProm ='X'+subId;	    
-	    var notas = 0;
-	    var con = 0;
-	    $('input', row).each(function() {
-	        if($(this).val() != "" && !isNaN($(this).val()) && con < (nColumnas-4)){
-	        	notas += Number($(this).val());
-	        	con++;
-	        }
-	    });
-	    
-	    row.find("#"+idProm).val(notas/con);	    
-	});*/
+	
 }
 
-function notaPromedio(){
+function cargarNotas(){
 
+	var data = {"obj" : 1};
+    
+	$.ajax({
+            type: "POST",
+            url: 'http://localhost/examenPrueba/static/php/dbnotas.php',
+            dataType: "json",
+            data: data,
+            success: function(response)
+            {
+                var notas = response.notas;
+ 				for (var i = 0;i < notas.length ; i++) {
+ 					$("#"+notas[i].codNota).val(notas[i].nota);
+ 					$("#"+notas[i].codNota).trigger('change');
+ 				}
+           }
+       });
+}
+
+function GrabarNotas(){
+
+	var data = {"obj" : 2, "notas": getNotas()};
+    
+	$.ajax({
+            type: "POST",
+            url: 'http://localhost/examenPrueba/static/php/dbnotas.php',
+            dataType: "json",
+            data: data,
+            success: function(response)
+            {
+                alert(response.success);
+           }
+       });
+}
+
+function getNotas(){
+
+	var obj = {};
+
+	var tble = document.getElementById("tabla1");
+
+	var nColumnas = $("#tabla1 tr:last td").length;
+	var nNotas = (nColumnas - 5);
+	
+	var row = tble.rows;
+
+	const alfabeto = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+	var rowactual;
+	var x;
+
+	for(var i = 0; i < row.length; i++) {
+
+		rowactual = row[i];
+
+		if (i != 0) {
+			for (var y = 2 ; y <= nNotas+1; y++) {
+				key = alfabeto[y - 2] + rowactual.getElementsByTagName("td")[0].innerHTML;				
+				x = $("#"+key).val();
+				if (x != "") {
+					obj[key] = x;
+				}		
+			}
+		}
+	}
+	
+	return obj;
 }
